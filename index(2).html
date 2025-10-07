@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع المحاضرات التعليمية</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light-color);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #1c6ea4;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark-color);
+        }
+        
+        .auth-forms {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .form-title {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--dark-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .form-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .dashboard {
+            display: none;
+        }
+        
+        .admin-dashboard {
+            display: none;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        .table th, .table td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .lectures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .lecture-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .lecture-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        
+        .lecture-img {
+            height: 180px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+        
+        .lecture-content {
+            padding: 1.5rem;
+        }
+        
+        .lecture-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .lecture-description {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .message-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .alert {
+            padding: 12px 15px;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(39, 174, 96, 0.2);
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+        
+        .status-pending {
+            color: var(--warning-color);
+            font-weight: 500;
+        }
+        
+        .status-approved {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .auth-forms {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">موقع المحاضرات</div>
+                <ul class="nav-links">
+                    <li><a href="#" id="home-link">الرئيسية</a></li>
+                    <li><a href="#" id="about-link">عن الموقع</a></li>
+                    <li><a href="#" id="contact-link">اتصل بنا</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" id="login-btn">تسجيل الدخول</button>
+                    <button class="btn btn-primary" id="register-btn">إنشاء حساب</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- قسم البطل -->
+    <section class="hero">
+        <div class="container">
+            <h1>مرحباً بكم في منصة المحاضرات التعليمية</h1>
+            <p>موقع متخصص لعرض المحاضرات التعليمية الحصرية. سجل الآن للوصول إلى محتوى حصري بعد موافقة الإدارة.</p>
+            <button class="btn btn-primary" id="hero-register-btn">سجل الآن</button>
+        </div>
+    </section>
+
+    <!-- قسم نماذج التسجيل والدخول -->
+    <section class="section" id="auth-section">
+        <div class="container">
+            <h2 class="section-title">إنشاء حساب أو تسجيل الدخول</h2>
+            <div class="auth-forms">
+                <!-- نموذج تسجيل الدخول -->
+                <div class="form-container">
+                    <h3 class="form-title">تسجيل الدخول</h3>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-phone">رقم الهاتف</label>
+                            <input type="tel" id="login-phone" class="form-control" placeholder="أدخل رقم هاتفك" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">كلمة المرور</label>
+                            <input type="password" id="login-password" class="form-control" placeholder="أدخل كلمة المرور" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">تسجيل الدخول</button>
+                        <div class="form-footer">
+                            <a href="#" id="forgot-password">نسيت كلمة المرور؟</a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- نموذج إنشاء حساب -->
+                <div class="form-container">
+                    <h3 class="form-title">إنشاء حساب جديد</h3>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label for="register-name">الاسم الكامل</label>
+                            <input type="text" id="register-name" class="form-control" placeholder="أدخل اسمك الكامل" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">رقم الهاتف</label>
+                            <input type="tel" id="register-phone" class="form-control" placeholder="أدخل رقم هاتفك" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">كلمة المرور</label>
+                            <input type="password" id="register-password" class="form-control" placeholder="اختر كلمة مرور قوية" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">تأكيد كلمة المرور</label>
+                            <input type="password" id="register-confirm-password" class="form-control" placeholder="أعد إدخال كلمة المرور" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">إنشاء حساب</button>
+                        <div class="form-footer">
+                            <p>بالنقر على "إنشاء حساب" فإنك توافق على <a href="#">شروط الاستخدام</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة تحكم المستخدم -->
+    <section class="section dashboard" id="user-dashboard">
+        <div class="container">
+            <h2 class="section-title">لوحة تحكم المستخدم</h2>
+            <div class="tabs">
+                <div class="tab active" data-tab="lectures">المحاضرات</div>
+                <div class="tab" data-tab="profile">الملف الشخصي</div>
+                <div class="tab" data-tab="messages">الرسائل</div>
+            </div>
+            
+            <div class="tab-content active" id="lectures-tab">
+                <h3>المحاضرات المتاحة</h3>
+                <div class="lectures-grid" id="lectures-container">
+                    <!-- سيتم ملء المحاضرات ديناميكياً -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="profile-tab">
+                <h3>الملف الشخصي</h3>
+                <div class="form-container">
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="profile-name">الاسم الكامل</label>
+                            <input type="text" id="profile-name" class="form-control" value="محمد أحمد">
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-phone">رقم الهاتف</label>
+                            <input type="tel" id="profile-phone" class="form-control" value="01234567890" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-password">كلمة المرور الجديدة</label>
+                            <input type="password" id="profile-password" class="form-control" placeholder="اتركه فارغاً إذا لم ترد التغيير">
+                        </div>
+                        <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="messages-tab">
+                <h3>الرسائل</h3>
+                <div id="messages-container">
+                    <!-- سيتم ملء الرسائل ديناميكياً -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- لوحة تحكم الإدمن -->
+    <section class="section admin-dashboard" id="admin-dashboard">
+        <div class="container">
+            <h2 class="section-title">لوحة تحكم الإدمن</h2>
+            <div class="tabs">
+                <div class="tab active" data-tab="users">إدارة المستخدمين</div>
+                <div class="tab" data-tab="send-message">إرسال رسالة</div>
+                <div class="tab" data-tab="lectures-admin">إدارة المحاضرات</div>
+            </div>
+            
+            <div class="tab-content active" id="users-tab">
+                <h3>إدارة المستخدمين</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>الاسم</th>
+                            <th>رقم الهاتف</th>
+                            <th>الحالة</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table">
+                        <!-- سيتم ملء بيانات المستخدمين ديناميكياً -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="tab-content" id="send-message-tab">
+                <h3>إرسال رسالة للمستخدمين</h3>
+                <div class="form-container">
+                    <form id="message-form">
+                        <div class="form-group">
+                            <label for="message-recipients">المستلمون</label>
+                            <select id="message-recipients" class="form-control" multiple>
+                                <option value="all">جميع المستخدمين</option>
+                                <option value="approved">المستخدمون المفعلون فقط</option>
+                                <option value="pending">المستخدمون المنتظرون فقط</option>
+                            </select>
+                            <small>يمكنك اختيار أكثر من خيار بالضغط على Ctrl</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-subject">عنوان الرسالة</label>
+                            <input type="text" id="message-subject" class="form-control" placeholder="أدخل عنوان الرسالة" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message-content">محتوى الرسالة</label>
+                            <textarea id="message-content" class="form-control" placeholder="أدخل محتوى الرسالة" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">إرسال الرسالة</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="lectures-admin-tab">
+                <h3>إدارة المحاضرات</h3>
+                <button class="btn btn-primary" id="add-lecture-btn">إضافة محاضرة جديدة</button>
+                <div class="lectures-grid" id="admin-lectures-container">
+                    <!-- سيتم ملء المحاضرات ديناميكياً -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <div class="container">
+            <p>جميع الحقوق محفوظة &copy; 2023 موقع المحاضرات التعليمية</p>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات التطبيق
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let lectures = JSON.parse(localStorage.getItem('lectures')) || [];
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+        // تهيئة التطبيق
+        document.addEventListener('DOMContentLoaded', function() {
+            initApp();
+            
+            // إضافة بعض البيانات الافتراضية إذا لم تكن موجودة
+            if (users.length === 0) {
+                users = [
+                    { id: 1, name: 'محمد أحمد', phone: '01234567890', password: '123456', status: 'approved' },
+                    { id: 2, name: 'أحمد علي', phone: '01234567891', password: '123456', status: 'pending' },
+                    { id: 3, name: 'فاطمة محمد', phone: '01234567892', password: '123456', status: 'approved' }
+                ];
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            if (lectures.length === 0) {
+                lectures = [
+                    { id: 1, title: 'مقدمة في البرمجة', description: 'محاضرة تمهيدية عن أساسيات البرمجة', image: 'programming.jpg' },
+                    { id: 2, title: 'أساسيات HTML', description: 'تعلم لغة ترميز النصوص الفائقة', image: 'html.jpg' },
+                    { id: 3, title: 'تصميم CSS', description: 'تعلم تصميم وتنسيق صفحات الويب', image: 'css.jpg' },
+                    { id: 4, title: 'جافا سكريبت', description: 'تعلم البرمجة بلغة جافا سكريبت', image: 'javascript.jpg' }
+                ];
+                localStorage.setItem('lectures', JSON.stringify(lectures));
+            }
+            
+            // استعادة حالة المستخدم الحالي
+            if (currentUser) {
+                showDashboard();
+            }
+            
+            // إعداد المستمعين للأحداث
+            setupEventListeners();
+            
+            // عرض المحاضرات
+            displayLectures();
+            displayAdminLectures();
+            
+            // عرض المستخدمين في لوحة الإدمن
+            displayUsers();
+        });
+        
+        function initApp() {
+            // إضافة حساب الإدمن إذا لم يكن موجوداً
+            const adminExists = users.some(user => user.phone === '01153786085');
+            if (!adminExists) {
+                users.push({
+                    id: Date.now(),
+                    name: 'مسؤول النظام',
+                    phone: '01153786085',
+                    password: 'admin123',
+                    status: 'approved',
+                    isAdmin: true
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+        
+        function setupEventListeners() {
+            // أحداث الأزرار
+            document.getElementById('login-btn').addEventListener('click', showLoginForm);
+            document.getElementById('register-btn').addEventListener('click', showRegisterForm);
+            document.getElementById('hero-register-btn').addEventListener('click', showRegisterForm);
+            document.getElementById('home-link').addEventListener('click', showHome);
+            
+            // أحداث النماذج
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('register-form').addEventListener('submit', handleRegister);
+            document.getElementById('profile-form').addEventListener('submit', handleProfileUpdate);
+            document.getElementById('message-form').addEventListener('submit', handleSendMessage);
+            
+            // أحداث التبويب
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // زر إضافة محاضرة جديدة
+            document.getElementById('add-lecture-btn').addEventListener('click', function() {
+                alert('هذه الوظيفة تحت التطوير');
+            });
+        }
+        
+        function showLoginForm() {
+            document.getElementById('auth-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('auth-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showHome() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            
+            // البحث عن المستخدم
+            const user = users.find(u => u.phone === phone && u.password === password);
+            
+            if (user) {
+                if (user.status === 'approved') {
+                    currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // التحقق إذا كان المستخدم هو الإدمن
+                    if (user.phone === '01153786085') {
+                        isAdmin = true;
+                        localStorage.setItem('isAdmin', 'true');
+                        showAdminDashboard();
+                    } else {
+                        isAdmin = false;
+                        localStorage.setItem('isAdmin', 'false');
+                        showDashboard();
+                    }
+                    
+                    showAlert('تم تسجيل الدخول بنجاح!', 'success');
+                } else {
+                    showAlert('حسابك قيد المراجعة. يرجى الانتظار حتى يتم تفعيله.', 'danger');
+                }
+            } else {
+                showAlert('رقم الهاتف أو كلمة المرور غير صحيحة!', 'danger');
+            }
+        }
+        
+        function handleRegister(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('register-name').value;
+            const phone = document.getElementById('register-phone').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            // التحقق من تطابق كلمات المرور
+            if (password !== confirmPassword) {
+                showAlert('كلمات المرور غير متطابقة!', 'danger');
+                return;
+            }
+            
+            // التحقق من عدم وجود رقم هاتف مكرر
+            const userExists = users.some(u => u.phone === phone);
+            if (userExists) {
+                showAlert('رقم الهاتف مسجل مسبقاً!', 'danger');
+                return;
+            }
+            
+            // إنشاء مستخدم جديد
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                phone: phone,
+                password: password,
+                status: 'pending'
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showAlert('تم إنشاء الحساب بنجاح! سيتم تفعيله بعد مراجعة الإدارة.', 'success');
+            document.getElementById('register-form').reset();
+        }
+        
+        function handleProfileUpdate(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('profile-name').value;
+            const password = document.getElementById('profile-password').value;
+            
+            // تحديث بيانات المستخدم
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex].name = name;
+                if (password) {
+                    users[userIndex].password = password;
+                }
+                
+                localStorage.setItem('users', JSON.stringify(users));
+                currentUser = users[userIndex];
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                showAlert('تم تحديث الملف الشخصي بنجاح!', 'success');
+            }
+        }
+        
+        function handleSendMessage(e) {
+            e.preventDefault();
+            
+            const recipients = Array.from(document.getElementById('message-recipients').selectedOptions).map(option => option.value);
+            const subject = document.getElementById('message-subject').value;
+            const content = document.getElementById('message-content').value;
+            
+            // إنشاء رسالة جديدة
+            const newMessage = {
+                id: Date.now(),
+                recipients: recipients,
+                subject: subject,
+                content: content,
+                timestamp: new Date().toLocaleString('ar-EG')
+            };
+            
+            messages.push(newMessage);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            
+            showAlert('تم إرسال الرسالة بنجاح!', 'success');
+            document.getElementById('message-form').reset();
+        }
+        
+        function showDashboard() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('user-dashboard').style.display = 'block';
+            document.getElementById('admin-dashboard').style.display = 'none';
+            
+            // تحديث بيانات الملف الشخصي
+            document.getElementById('profile-name').value = currentUser.name;
+            document.getElementById('profile-phone').value = currentUser.phone;
+            
+            // عرض الرسائل للمستخدم
+            displayUserMessages();
+        }
+        
+        function showAdminDashboard() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('user-dashboard').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+            
+            // تحديث قائمة المستخدمين
+            displayUsers();
+        }
+        
+        function switchTab(tabId) {
+            // إخفاء جميع المحتويات
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // إلغاء تنشيط جميع التبويبات
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // تفعيل التبويب والمحتوى المحدد
+            document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        }
+        
+        function displayLectures() {
+            const container = document.getElementById('lectures-container');
+            container.innerHTML = '';
+            
+            lectures.forEach(lecture => {
+                const lectureCard = document.createElement('div');
+                lectureCard.className = 'lecture-card';
+                lectureCard.innerHTML = `
+                    <div class="lecture-img">صورة المحاضرة</div>
+                    <div class="lecture-content">
+                        <h4 class="lecture-title">${lecture.title}</h4>
+                        <p class="lecture-description">${lecture.description}</p>
+                        <button class="btn btn-primary">مشاهدة المحاضرة</button>
+                    </div>
+                `;
+                container.appendChild(lectureCard);
+            });
+        }
+        
+        function displayAdminLectures() {
+            const container = document.getElementById('admin-lectures-container');
+            container.innerHTML = '';
+            
+            lectures.forEach(lecture => {
+                const lectureCard = document.createElement('div');
+                lectureCard.className = 'lecture-card';
+                lectureCard.innerHTML = `
+                    <div class="lecture-img">صورة المحاضرة</div>
+                    <div class="lecture-content">
+                        <h4 class="lecture-title">${lecture.title}</h4>
+                        <p class="lecture-description">${lecture.description}</p>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <button class="btn btn-warning">تعديل</button>
+                            <button class="btn btn-danger">حذف</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(lectureCard);
+            });
+        }
+        
+        function displayUsers() {
+            const tableBody = document.getElementById('users-table');
+            tableBody.innerHTML = '';
+            
+            users.forEach(user => {
+                if (user.phone === '01153786085') return; // تخطي حساب الإدمن
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.phone}</td>
+                    <td class="${user.status === 'approved' ? 'status-approved' : 'status-pending'}">
+                        ${user.status === 'approved' ? 'مفعل' : 'قيد المراجعة'}
+                    </td>
+                    <td>${new Date().toLocaleDateString('ar-EG')}</td>
+                    <td>
+                        ${user.status === 'pending' ? 
+                            `<button class="btn btn-success" onclick="approveUser(${user.id})">قبول</button>` : 
+                            `<button class="btn btn-warning" onclick="deactivateUser(${user.id})">تعطيل</button>`
+                        }
+                        <button class="btn btn-danger" onclick="deleteUser(${user.id})">حذف</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+        
+        function displayUserMessages() {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '';
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<p>لا توجد رسائل حتى الآن.</p>';
+                return;
+            }
+            
+            messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'form-container';
+                messageDiv.style.marginBottom = '15px';
+                messageDiv.innerHTML = `
+                    <h4>${message.subject}</h4>
+                    <p>${message.content}</p>
+                    <small>${message.timestamp}</small>
+                `;
+                container.appendChild(messageDiv);
+            });
+        }
+        
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.textContent = message;
+            
+            document.querySelector('.container').prepend(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+        
+        // وظائف الإدمن
+        function approveUser(userId) {
+            const userIndex = users.findIndex(u => u.id === userId);
+            if (userIndex !== -1) {
+                users[userIndex].status = 'approved';
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsers();
+                showAlert('تم تفعيل المستخدم بنجاح!', 'success');
+            }
+        }
+        
+        function deactivateUser(userId) {
+            const userIndex = users.findIndex(u => u.id === userId);
+            if (userIndex !== -1) {
+                users[userIndex].status = 'pending';
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsers();
+                showAlert('تم تعطيل المستخدم بنجاح!', 'success');
+            }
+        }
+        
+        function deleteUser(userId) {
+            if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+                users = users.filter(u => u.id !== userId);
+                localStorage.setItem('users', JSON.stringify(users));
+                displayUsers();
+                showAlert('تم حذف المستخدم بنجاح!', 'success');
+            }
+        }
+    </script>
+</body>
+</html>
